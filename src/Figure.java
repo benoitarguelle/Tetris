@@ -6,25 +6,25 @@ import java.awt.event.*;
 public class Figure extends Frame implements ActionListener, ItemListener{
 	
 	// DECLARATION DES ATTRIBUTS
-	private Color couleurFigure ;
+	private Color couleurForme ;
 	private Forme f ;
-	private int numJoueur ;
+	private Joueur J0 ;
+	private Joueur J1 ;
 	private int numFig ;
-	private Choice orientation ;
+	private Choice sens ;
 	private Choice position ;
 	private Button validation ;
 	
 	public Figure(int numFig, int numJoeur) {
-		couleurFigure = coloriage(numJoueur);
 		
 		setLayout(new FlowLayout());   
-		
-		orientation = new Choice() ;
-		orientation.add("à l'endroit");
-		orientation.add("à l'envers");
-		orientation.add("rotation à gauche");
-		orientation.add("rotation à droite");
-		orientation.addItemListener(this);
+	
+		sens = new Choice() ;
+		sens.add("à l'endroit");
+		sens.add("à l'envers");
+		sens.add("rotation à gauche");
+		sens.add("rotation à droite");
+		sens.addItemListener(this);
 		
 		position = new Choice() ;
 		position.add("0");
@@ -40,66 +40,144 @@ public class Figure extends Frame implements ActionListener, ItemListener{
 		validation = new Button("Validation");
 	}
 	
-	public Color coloriage(int numJoueur) {
-		if (numJoueur==0) {return Color.orange ;}
-		else {return Color.cyan ;}
-	}
 
 	 public void paint(Graphics g)  {
 		// récupération des dimensions de l'application :
 		int w = getSize().width; 
 		int h = getSize().height;
-		    g.setColor(couleurCarre);
-		    g.fillRect(w/2-rayon, h/2-rayon, 2*rayon, 2*rayon);
-		    // dessin du disque :
-		    g.setColor(couleurCercle);
-		    g.fillOval(w/2-rayon, h/2-rayon, 2*rayon, 2*rayon);
-		  }	
+		
+		g.setColor(couleurForme);
+		
+		switch (f.type) {
+		case "O" :
+			g.setColor(f.fcouleur[0]);
+			g.fillRect(w, h, -100, 100);
+			g.setColor(fcouleur[1]);
+			g.fillRect(w, h, 100, 100);
+			g.setColor(fcouleur[2]);
+			g.fillRect(w, h, -100, -100);
+			g.setColor(fcouleur[3]);
+			g.fillRect(w, h, 100, -100);
+			break;
+		case "I" :
+			g.setColor(f.fcouleur[0]);
+			g.fillRect(w-50, h+100, 100, 100);
+			g.setColor(fcouleur[1]);
+			g.fillRect(w-50, h, 100, 100);
+			g.setColor(fcouleur[2]);
+			g.fillRect(w-50, h, 100, -100);
+			g.setColor(fcouleur[3]);
+			g.fillRect(w-5O, h-100, 100, -100);
+			break;
+		case "T" :
+			g.setColor(f.fcouleur[0]);
+			g.fillRect(w-150, h+50, 100, 100);
+			g.setColor(fcouleur[1]);
+			g.fillRect(w-50, h+50, 100, 100);
+			g.setColor(fcouleur[2]);
+			g.fillRect(w+150, h+50, 100, 100);
+			g.setColor(fcouleur[3]);
+			g.fillRect(w-50, h-50, 100, 100);
+			break ;
+		case "L" :
+			g.setColor(f.fcouleur[0]);
+			g.fillRect(w-50, h+100, 100, 100);
+			g.setColor(fcouleur[1]);
+			g.fillRect(w-50, h, 100, 100);
+			g.setColor(fcouleur[2]);
+			g.fillRect(w-50, h-100, 100, 100);
+			g.setColor(fcouleur[3]);
+			g.fillRect(w+50, h-100, 100, 100);
+			break;
+		case "J" :
+			g.setColor(f.fcouleur[0]);
+			g.fillRect(w-50, h+100, 100, 100);
+			g.setColor(fcouleur[1]);
+			g.fillRect(w+50, h+100, 100, 100);
+			g.setColor(fcouleur[2]);
+			g.fillRect(w-50, h, 100, 100);
+			g.setColor(fcouleur[3]);
+			g.fillRect(w-50, h-100, 100, 100);
+			break;
+		case "Z" :
+			g.setColor(f.fcouleur[0]);
+			g.fillRect(w-200, h, 100, 100);
+			g.setColor(fcouleur[1]);
+			g.fillRect(w-100, h, 100, 100);
+			g.setColor(fcouleur[2]);
+			g.fillRect(w, h-100, 100, 100);
+			g.setColor(fcouleur[3]);
+			g.fillRect(w+100, h-100, 100, 100);
+			break;
+		case "S" :
+			g.setColor(f.fcouleur[0]);
+			g.fillRect(w, h, 100, 100);
+			g.setColor(fcouleur[1]);
+			g.fillRect(w+100, h, 100, 100);
+			g.setColor(fcouleur[2]);
+			g.fillRect(w-200, h-100, 100, 100);
+			g.setColor(fcouleur[3]);
+			g.fillRect(w-100, h-100, 100, 100);
+			break;
+		}
+		
+
+		}	
 	
 	
 	public void actionPerformed(ActionEvent evt) {
 		if (evt.getSource() == validation) {
 			//// APPPEL AU PROGRAMME POUR METTRE A JOUR LA GRILLE
 			f = new Forme() ;
-			numJoueur = (numJoueur+1)%2 ;
 		}
 	}	
 	
 	public void itemStateChanged(ItemEvent evt) {
-		switch (orientation.getSelectedItem()) {
+		switch (sens.getSelectedItem()) {
 		case "à l'endroit" :
-			f.forientation = 0 ;
+			f.fsens = 0 ;
+			break;
 		case "rotation à gauche" :
-			f.forientation = 1 ;
+			f.fsens = 1 ;
+			break;
 		case "à l'envers" :
-			f.forientation = 2 ;
+			f.fsens = 2 ;
+			break;
 		case "rotation à droite" :
-			f.forientation = 3 ;
+			f.fsens = 3 ;
+			break;
 		}
 		
 		switch (position.getSelectedItem()) {
 		case "0" :
 			f.fposition = 0 ;
+			break;
 		case "1" :
 			f.fposition = 1 ;
+			break;
 		case "2" :
 			f.fposition = 2 ;
+			break;
 		case "3" :
 			f.fposition = 3 ;
+			break;
 		case "4" :
 			f.fposition = 4 ;
+			break;
 		case "5" :
 			f.fposition = 5 ;
+			break;
 		case "6" :
 			f.fposition = 6 ;
+			break;
 		case "7" :
 			f.fposition = 7 ;
-		}
-		
+			break;
+		}	
 	}
 	
 	public static void main(String[] args) {
-		AppliDisque appli = new AppliDisque();
+		Figure appli = new Figure();
 		appli.setLocation(100, 100);
 		appli.setSize(600, 600);
 		appli.setVisible(true);
