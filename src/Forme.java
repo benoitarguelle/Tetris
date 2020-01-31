@@ -1,9 +1,11 @@
+import java.awt.Color;
 
 public class Forme {
 	
 	int fposition;
 	int fsens;
 	String type;
+	Color[] fcolor;
 	
 	
 	public Forme() {
@@ -28,6 +30,16 @@ public class Forme {
 		}
 		fsens= 0;
 		fposition= 0;
+		fcolor= new Color[4];
+		for (int i =0; i<4; i++) {
+			if (Math.random()<0.5) {
+				fcolor[i]= Color.ORANGE;
+			}
+			else {
+				fcolor[i]= Color.cyan;
+			}
+		}
+		
 	} 
 }
 

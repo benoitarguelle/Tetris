@@ -11,4 +11,8 @@ public class Case {
 		color= Color.WHITE;
 	}
 	
+	public Case(Color c) {
+		Case_remplie=true;
+		color=c;
+	}
 }
