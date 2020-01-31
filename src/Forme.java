@@ -5,7 +5,7 @@ public class Forme {
 	int fposition;
 	int fsens;
 	String type;
-	Color[] fcolor;
+	Case[] fcolor;
 	
 	
 	public Forme() {
@@ -38,6 +38,10 @@ public class Forme {
 			else {
 				fcolor[i]= Color.cyan;
 			}
+		}
+		fcase= new Case[4];
+		for (int i=0; i<4; i++) {
+			
 		}
 		
 	} 
