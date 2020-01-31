@@ -42,7 +42,7 @@ public void AjoutForme(Forme f) {
 	case "O":
 		while ((Grille_de_jeu[colonne][k].Case_remplie== false)&& 
 			(Grille_de_jeu[colonne+1][k].Case_remplie== false) && 
-			(k<6)) {
+			(k<=6)) {
 			k=k+1;
 		}
 		k=k-1;
@@ -310,9 +310,9 @@ public void AjoutForme(Forme f) {
 	}
 		k=k-1;
 		Grille_de_jeu[colonne][k].Case_remplie= true;
-		Grille_de_jeu[colonne][k].color= f.fcolor[1];
+		Grille_de_jeu[colonne][k].color= f.fcolor[0];
 		Grille_de_jeu[colonne+1][k].Case_remplie= true;
-		Grille_de_jeu[colonne+1][k].color= f.fcolor[0];
+		Grille_de_jeu[colonne+1][k].color= f.fcolor[1];
 		Grille_de_jeu[colonne+1][k+1].Case_remplie= true;
 		Grille_de_jeu[colonne+1][k+1].color= f.fcolor[2];
 		Grille_de_jeu[colonne+2][k+1].Case_remplie= true;
@@ -346,7 +346,7 @@ public void AjoutForme(Forme f) {
 		if (f.fsens==1 || f.fsens==3) {
 			while ((Grille_de_jeu[colonne][k+1].Case_remplie== false)&& 
 					(Grille_de_jeu[colonne+1][k].Case_remplie== false)&&
-						(k<=6)) {
+						(k<=5)) {
 							k=k+1;
 		
 	}
